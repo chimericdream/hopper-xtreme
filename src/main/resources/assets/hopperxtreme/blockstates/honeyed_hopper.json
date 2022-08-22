@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "facing=down": {
+            "model": "hopperxtreme:block/honeyed_hopper"
+        },
+        "facing=east": {
+            "model": "hopperxtreme:block/honeyed_hopper_side",
+            "y": 90
+        },
+        "facing=north": {
+            "model": "hopperxtreme:block/honeyed_hopper_side"
+        },
+        "facing=south": {
+            "model": "hopperxtreme:block/honeyed_hopper_side",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "hopperxtreme:block/honeyed_hopper_side",
+            "y": 270
+        }
+    }
+}

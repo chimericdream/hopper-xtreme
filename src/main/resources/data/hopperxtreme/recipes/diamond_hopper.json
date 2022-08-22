@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:smithing",
+    "addition": {
+        "item": "minecraft:diamond"
+    },
+    "base": {
+        "item": "hopperxtreme:golden_hopper"
+    },
+    "result": {
+        "item": "hopperxtreme:diamond_hopper"
+    }
+}

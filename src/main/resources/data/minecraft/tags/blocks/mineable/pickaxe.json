@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "hopperxtreme:honeyed_hopper",
+        "hopperxtreme:copper_hopper",
+        "hopperxtreme:golden_hopper",
+        "hopperxtreme:diamond_hopper",
+        "hopperxtreme:netherite_hopper"
+    ]
+}

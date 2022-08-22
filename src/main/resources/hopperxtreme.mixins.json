@@ -4,9 +4,9 @@
   "package": "com.chimericdream.hopperxtreme.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+      "HopperXtremeRedstoneWireBlockMixin"
   ],
   "client": [
-      "HopperXtremeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,12 @@
+{
+    "block.hopperxtreme.honeyed_hopper": "Honeyed Hopper",
+    "block.hopperxtreme.copper_hopper": "Copper Hopper",
+    "block.hopperxtreme.golden_hopper": "Golden Hopper",
+    "block.hopperxtreme.diamond_hopper": "Diamond Hopper",
+    "block.hopperxtreme.netherite_hopper": "Netherite Hopper",
+    "container.honeyed_hopper": "Honeyed Item Hopper",
+    "container.copper_hopper": "Copper Item Hopper",
+    "container.golden_hopper": "Golden Item Hopper",
+    "container.diamond_hopper": "Diamond Item Hopper",
+    "container.netherite_hopper": "Netherite Item Hopper"
+}
