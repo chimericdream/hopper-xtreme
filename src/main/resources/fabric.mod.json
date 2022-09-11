@@ -3,17 +3,15 @@
   "id": "hopperxtreme",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
-  "authors": [
-    "Me!"
-  ],
+  "name": "Hopper X-Treme",
+  "description": "X-Treme hoppers!",
+  "authors": ["chimericdream"],
   "contact": {
     "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/chimericdream/hopper-extreme"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/hopperxtreme/icon.png",
 
   "environment": "*",
@@ -31,8 +29,5 @@
     "fabric": "*",
     "minecraft": "~1.19",
     "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }
