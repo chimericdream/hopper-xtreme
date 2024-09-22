@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "hopperxtreme",
+    "version": "${version}",
+    "name": "Hopper X-Treme",
+    "description": "This is an example description! Tell everyone what your mod is about!",
+    "authors": [
+        "Me!"
+    ],
+    "contact": {
+        "homepage": "https://fabricmc.net/",
+        "sources": "https://github.com/FabricMC/fabric-example-mod"
+    },
+    "license": "CC0-1.0",
+    "icon": "assets/hopperxtreme/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.chimericdream.hopperxtreme.fabric.HopperXtremeFabric"
+        ],
+        "client": [
+            "com.chimericdream.hopperxtreme.fabric.client.HopperXtremeFabricClient"
+        ]
+    },
+    "mixins": [
+        "hopperxtreme.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.16.5",
+        "minecraft": "~1.21",
+        "java": ">=21",
+        "architectury": ">=13.0.2",
+        "fabric-api": "*"
+    }
+}

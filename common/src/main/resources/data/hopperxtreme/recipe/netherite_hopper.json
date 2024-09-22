@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:smithing_transform",
+    "template": {
+        "item": "minecraft:paper"
+    },
+    "addition": {
+        "item": "minecraft:netherite_ingot"
+    },
+    "base": {
+        "item": "hopperxtreme:diamond_hopper"
+    },
+    "result": {
+        "id": "hopperxtreme:netherite_hopper"
+    }
+}

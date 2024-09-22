@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:smithing_transform",
+    "template": {
+        "item": "minecraft:paper"
+    },
+    "addition": {
+        "item": "minecraft:gold_ingot"
+    },
+    "base": {
+        "item": "minecraft:hopper"
+    },
+    "result": {
+        "id": "hopperxtreme:golden_hopper"
+    }
+}
