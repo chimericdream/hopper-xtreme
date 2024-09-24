@@ -92,6 +92,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
         return baseKey;
     }
 
+    @Override
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         switch ((Direction)state.get(FACING)) {
             case DOWN -> {
@@ -115,6 +116,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     protected VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos) {
         switch ((Direction)state.get(FACING)) {
             case DOWN -> {
@@ -138,6 +140,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction direction = ctx.getSide().getOpposite();
         return (BlockState)((BlockState)this.getDefaultState().with(FACING, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction)).with(ENABLED, true);
@@ -153,12 +156,14 @@ public class XtremeHopperBlock extends BlockWithEntity {
         return world.isClient ? null : validateTicker(type, XTREME_HOPPER_BLOCK_ENTITY.get(), XtremeHopperBlockEntity::serverTick);
     }
 
+    @Override
     protected void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!oldState.isOf(state.getBlock())) {
             this.updateEnabled(world, pos, state);
         }
     }
 
+    @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
@@ -173,6 +178,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
         }
     }
 
+    @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         this.updateEnabled(world, pos, state);
     }
@@ -189,35 +195,43 @@ public class XtremeHopperBlock extends BlockWithEntity {
 
     }
 
+    @Override
     protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         ItemScatterer.onStateReplaced(state, newState, world, pos);
         super.onStateReplaced(state, world, pos, newState, moved);
     }
 
+    @Override
     protected BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
+    @Override
     protected boolean hasComparatorOutput(BlockState state) {
         return true;
     }
 
+    @Override
     protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }
 
+    @Override
     protected BlockState rotate(BlockState state, BlockRotation rotation) {
         return (BlockState)state.with(FACING, rotation.rotate((Direction)state.get(FACING)));
     }
 
+    @Override
     protected BlockState mirror(BlockState state, BlockMirror mirror) {
         return state.rotate(mirror.getRotation((Direction)state.get(FACING)));
     }
 
+    @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(new Property[]{FACING, ENABLED});
     }
 
+    @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof XtremeHopperBlockEntity) {
@@ -226,6 +240,7 @@ public class XtremeHopperBlock extends BlockWithEntity {
 
     }
 
+    @Override
     protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return false;
     }

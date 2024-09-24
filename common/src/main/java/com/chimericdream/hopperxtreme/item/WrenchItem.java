@@ -1,29 +1,27 @@
 package com.chimericdream.hopperxtreme.item;
 
 import com.chimericdream.hopperxtreme.ModInfo;
-import com.chimericdream.hopperxtreme.block.XtremeMultiHopperBlock;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class WrenchItem extends Item {
     public static final Identifier ITEM_ID = Identifier.of(ModInfo.MOD_ID, "tools/wrench");
 
     public WrenchItem() {
-        super(new Settings().maxCount(1));
+        super(new Settings().maxCount(1).arch$tab(ItemGroups.TOOLS).arch$tab(ItemGroups.REDSTONE));
     }
 
     private boolean tryPlacing(BlockPos pos, BlockState state, World world) {
@@ -98,20 +96,6 @@ public class WrenchItem extends Item {
         return false;
     }
 
-    private boolean tryMultiHopper(BlockState state, ItemUsageContext context, BlockPos pos, World world) {
-        if (state.getBlock() instanceof XtremeMultiHopperBlock) {
-            Direction hitSide = context.getSide();
-            BooleanProperty connection = XtremeMultiHopperBlock.getConnectionProperty(hitSide);
-
-            world.setBlockState(pos, state.with(connection, !state.get(connection)));
-            world.markDirty(pos);
-
-            return true;
-        }
-
-        return false;
-    }
-
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
@@ -127,12 +111,7 @@ public class WrenchItem extends Item {
             return ActionResult.PASS;
         }
 
-        if (
-            tryFacing(state, pos, world)
-                || tryAxes(state, pos, world)
-                || trySlab(state, pos, world)
-                || tryMultiHopper(state, context, pos, world)
-        ) {
+        if (tryFacing(state, pos, world) || tryAxes(state, pos, world) || trySlab(state, pos, world)) {
             if (!world.isClient()) {
                 world.playSound(null, pos, SoundEvents.ITEM_SPYGLASS_USE, SoundCategory.AMBIENT, 2.0F, 1.5F);
             }
