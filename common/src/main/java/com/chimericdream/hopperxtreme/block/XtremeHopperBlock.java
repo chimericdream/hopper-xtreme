@@ -38,22 +38,26 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import static com.chimericdream.hopperxtreme.registry.ModRegistries.XTREME_HOPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_HOPPER_BLOCK_ENTITY;
 
-public abstract class XtremeHopperBlock extends BlockWithEntity {
+public class XtremeHopperBlock extends BlockWithEntity {
     public static final MapCodec<XtremeHopperBlock> CODEC = createCodec(XtremeHopperBlock::create);
+
     public static final DirectionProperty FACING;
     public static final BooleanProperty ENABLED;
+
     private static final VoxelShape TOP_SHAPE;
     private static final VoxelShape MIDDLE_SHAPE;
     private static final VoxelShape OUTSIDE_SHAPE;
     public static final VoxelShape INSIDE_SHAPE;
+
     private static final VoxelShape DEFAULT_SHAPE;
     private static final VoxelShape DOWN_SHAPE;
     private static final VoxelShape EAST_SHAPE;
     private static final VoxelShape NORTH_SHAPE;
     private static final VoxelShape SOUTH_SHAPE;
     private static final VoxelShape WEST_SHAPE;
+
     private static final VoxelShape DOWN_RAYCAST_SHAPE;
     private static final VoxelShape EAST_RAYCAST_SHAPE;
     private static final VoxelShape NORTH_RAYCAST_SHAPE;
@@ -65,17 +69,27 @@ public abstract class XtremeHopperBlock extends BlockWithEntity {
     }
 
     private final int cooldownInTicks;
+    private final String translationKey;
 
     static XtremeHopperBlock create(Settings settings) {
-        return new XtremeHopperBlock(8) {};
+        return new XtremeHopperBlock(8, "default") {};
     }
 
-    public XtremeHopperBlock(int cooldownInTicks) {
+    public XtremeHopperBlock(int cooldownInTicks, String translationKey) {
         super(Settings.copy(Blocks.HOPPER).mapColor(MapColor.STONE_GRAY).requiresTool().strength(3.0F, 4.8F).sounds(BlockSoundGroup.METAL).nonOpaque());
 
         this.cooldownInTicks = cooldownInTicks;
+        this.translationKey = translationKey;
 
         this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.DOWN)).with(ENABLED, true));
+    }
+
+    public int getCooldownInTicks() {
+        return cooldownInTicks;
+    }
+
+    public String getTranslationKey() {
+        return translationKey;
     }
 
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

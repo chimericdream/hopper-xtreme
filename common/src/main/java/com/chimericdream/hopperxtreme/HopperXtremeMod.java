@@ -14,6 +14,7 @@ public final class HopperXtremeMod {
 
     public static void init() {
         MANAGER = Suppliers.memoize(() -> RegistrarManager.get(ModInfo.MOD_ID));
+
         ModRegistries.init();
     }
 }

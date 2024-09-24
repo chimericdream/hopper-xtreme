@@ -1,10 +1,6 @@
 package com.chimericdream.hopperxtreme.entity;
 
-import com.chimericdream.hopperxtreme.block.CopperHopperBlock;
-import com.chimericdream.hopperxtreme.block.DiamondHopperBlock;
-import com.chimericdream.hopperxtreme.block.GoldenHopperBlock;
-import com.chimericdream.hopperxtreme.block.HoneyedHopperBlock;
-import com.chimericdream.hopperxtreme.block.NetheriteHopperBlock;
+import com.chimericdream.hopperxtreme.block.XtremeHopperBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -39,7 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import static com.chimericdream.hopperxtreme.registry.ModRegistries.XTREME_HOPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_HOPPER_BLOCK_ENTITY;
 
 public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implements Hopper {
     private final int cooldownInTicks;
@@ -105,24 +101,9 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
     protected Text getContainerName() {
         Block block = this.getCachedState().getBlock();
 
-        if (block instanceof HoneyedHopperBlock) {
-            return Text.translatable("container.honeyed_hopper");
-        }
-
-        if (block instanceof CopperHopperBlock) {
-            return Text.translatable("container.copper_hopper");
-        }
-
-        if (block instanceof GoldenHopperBlock) {
-            return Text.translatable("container.golden_hopper");
-        }
-
-        if (block instanceof DiamondHopperBlock) {
-            return Text.translatable("container.diamond_hopper");
-        }
-
-        if (block instanceof NetheriteHopperBlock) {
-            return Text.translatable("container.netherite_hopper");
+        if (block instanceof XtremeHopperBlock) {
+            String translationKey = ((XtremeHopperBlock) block).getTranslationKey();
+            return Text.translatable(String.format("container.%s", translationKey));
         }
 
         return Text.translatable("container.hopper");
@@ -141,24 +122,8 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
     private static int getCooldownForBlock(XtremeHopperBlockEntity blockEntity) {
         Block block = blockEntity.getCachedState().getBlock();
 
-        if (block instanceof HoneyedHopperBlock) {
-            return HoneyedHopperBlock.COOLDOWN_IN_TICKS;
-        }
-
-        if (block instanceof CopperHopperBlock) {
-            return CopperHopperBlock.COOLDOWN_IN_TICKS;
-        }
-
-        if (block instanceof GoldenHopperBlock) {
-            return GoldenHopperBlock.COOLDOWN_IN_TICKS;
-        }
-
-        if (block instanceof DiamondHopperBlock) {
-            return DiamondHopperBlock.COOLDOWN_IN_TICKS;
-        }
-
-        if (block instanceof NetheriteHopperBlock) {
-            return NetheriteHopperBlock.COOLDOWN_IN_TICKS;
+        if (block instanceof XtremeHopperBlock) {
+            return ((XtremeHopperBlock) block).getCooldownInTicks();
         }
 
         return 8;
