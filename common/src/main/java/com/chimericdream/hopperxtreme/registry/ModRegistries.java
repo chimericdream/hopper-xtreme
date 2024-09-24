@@ -3,6 +3,7 @@ package com.chimericdream.hopperxtreme.registry;
 import com.chimericdream.hopperxtreme.HopperXtremeMod;
 import com.chimericdream.hopperxtreme.ModInfo;
 import com.chimericdream.hopperxtreme.block.Hoppers;
+import com.chimericdream.hopperxtreme.item.ModItems;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
@@ -25,6 +26,7 @@ public class ModRegistries {
 
     public static void init() {
         Hoppers.init();
+        ModItems.init();
 
         HopperXtremeMod.LOGGER.debug("[hopperxtreme] registering blocks");
         BLOCKS.register();

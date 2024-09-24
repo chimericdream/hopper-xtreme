@@ -1,6 +1,3 @@
 {
-    "parent": "minecraft:item/generated",
-    "textures": {
-        "layer0": "hopperxtreme:item/copper_hopper"
-    }
+    "parent": "hopperxtreme:block/copper_hopper"
 }

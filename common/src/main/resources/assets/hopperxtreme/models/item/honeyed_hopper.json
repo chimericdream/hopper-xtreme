@@ -1,6 +1,3 @@
 {
-    "parent": "minecraft:item/generated",
-    "textures": {
-        "layer0": "hopperxtreme:item/honeyed_hopper"
-    }
+    "parent": "hopperxtreme:block/honeyed_hopper"
 }

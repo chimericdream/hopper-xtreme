@@ -1,6 +1,6 @@
 package com.chimericdream.hopperxtreme.entity;
 
-import com.chimericdream.hopperxtreme.block.XtremeHopperBlock;
+import com.chimericdream.hopperxtreme.block.XtremeMultiHopperBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -34,28 +34,40 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_HOPPER_BLOCK_ENTITY;
+import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_MULTI_HOPPER_BLOCK_ENTITY;
 
-public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implements Hopper {
+public class XtremeMultiHopperBlockEntity extends LootableContainerBlockEntity implements Hopper {
     private final int cooldownInTicks;
 
     private static final int[][] AVAILABLE_SLOTS_CACHE = new int[54][];
     private DefaultedList<ItemStack> inventory;
     private int transferCooldown;
     private long lastTickTime;
-    private Direction facing;
+    private Direction lastDirection;
+    private boolean northConnected;
+    private boolean southConnected;
+    private boolean eastConnected;
+    private boolean westConnected;
+    private boolean downConnected;
 
-    public XtremeHopperBlockEntity(BlockPos pos, BlockState state) {
+    public XtremeMultiHopperBlockEntity(BlockPos pos, BlockState state) {
         this(pos, state, 8);
     }
 
-    public XtremeHopperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks) {
-        super(XTREME_HOPPER_BLOCK_ENTITY.get(), pos, state);
+    public XtremeMultiHopperBlockEntity(BlockPos pos, BlockState state, int cooldownInTicks) {
+        super(XTREME_MULTI_HOPPER_BLOCK_ENTITY.get(), pos, state);
 
         this.cooldownInTicks = cooldownInTicks;
         this.inventory = DefaultedList.ofSize(5, ItemStack.EMPTY);
         this.transferCooldown = -1;
-        this.facing = (Direction) state.get(XtremeHopperBlock.FACING);
+
+        this.lastDirection = Direction.DOWN;
+
+        this.northConnected = state.get(XtremeMultiHopperBlock.NORTH_CONNECTED);
+        this.southConnected = state.get(XtremeMultiHopperBlock.SOUTH_CONNECTED);
+        this.eastConnected = state.get(XtremeMultiHopperBlock.EAST_CONNECTED);
+        this.westConnected = state.get(XtremeMultiHopperBlock.WEST_CONNECTED);
+        this.downConnected = state.get(XtremeMultiHopperBlock.DOWN_CONNECTED);
     }
 
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
@@ -94,21 +106,26 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
 
     public void setCachedState(BlockState state) {
         super.setCachedState(state);
-        this.facing = state.get(XtremeHopperBlock.FACING);
+
+        this.northConnected = state.get(XtremeMultiHopperBlock.NORTH_CONNECTED);
+        this.southConnected = state.get(XtremeMultiHopperBlock.SOUTH_CONNECTED);
+        this.eastConnected = state.get(XtremeMultiHopperBlock.EAST_CONNECTED);
+        this.westConnected = state.get(XtremeMultiHopperBlock.WEST_CONNECTED);
+        this.downConnected = state.get(XtremeMultiHopperBlock.DOWN_CONNECTED);
     }
 
     protected Text getContainerName() {
         Block block = this.getCachedState().getBlock();
 
-        if (block instanceof XtremeHopperBlock) {
-            String hopperKey = ((XtremeHopperBlock) block).getBaseKey();
-            return Text.translatable(String.format("container.%s", hopperKey));
+        if (block instanceof XtremeMultiHopperBlock) {
+            String baseKey = ((XtremeMultiHopperBlock) block).getBaseKey();
+            return Text.translatable(String.format("container.%s", baseKey));
         }
 
         return Text.translatable("container.hopper");
     }
 
-    public static void serverTick(World world, BlockPos pos, BlockState state, XtremeHopperBlockEntity blockEntity) {
+    public static void serverTick(World world, BlockPos pos, BlockState state, XtremeMultiHopperBlockEntity blockEntity) {
         --blockEntity.transferCooldown;
         blockEntity.lastTickTime = world.getTime();
 
@@ -118,22 +135,78 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
         }
     }
 
-    private static int getCooldownForBlock(XtremeHopperBlockEntity blockEntity) {
+    private static int getCooldownForBlock(XtremeMultiHopperBlockEntity blockEntity) {
         Block block = blockEntity.getCachedState().getBlock();
 
-        if (block instanceof XtremeHopperBlock) {
-            return ((XtremeHopperBlock) block).getCooldownInTicks();
+        if (block instanceof XtremeMultiHopperBlock) {
+            return ((XtremeMultiHopperBlock) block).getCooldownInTicks();
         }
 
         return 8;
     }
 
-    private static boolean insertAndExtract(World world, BlockPos pos, BlockState state, XtremeHopperBlockEntity blockEntity, BooleanSupplier booleanSupplier) {
+    public Direction getNextDirection() {
+        switch (lastDirection) {
+            case NORTH:
+                if (this.southConnected) {
+                    lastDirection = Direction.SOUTH;
+                    return lastDirection;
+                }
+
+            // deliberately fall through
+            case SOUTH:
+                if (this.eastConnected) {
+                    lastDirection = Direction.EAST;
+                    return lastDirection;
+                }
+
+            // deliberately fall through
+            case EAST:
+                if (this.westConnected) {
+                    lastDirection = Direction.WEST;
+                    return lastDirection;
+                }
+
+            // deliberately fall through
+            case WEST:
+                if (this.downConnected) {
+                    lastDirection = Direction.DOWN;
+                    return lastDirection;
+                }
+
+            // deliberately fall through
+            default:
+                if (this.northConnected) {
+                    lastDirection = Direction.NORTH;
+                    return lastDirection;
+                }
+                if (this.southConnected) {
+                    lastDirection = Direction.SOUTH;
+                    return lastDirection;
+                }
+                if (this.eastConnected) {
+                    lastDirection = Direction.EAST;
+                    return lastDirection;
+                }
+                if (this.westConnected) {
+                    lastDirection = Direction.WEST;
+                    return lastDirection;
+                }
+                if (this.downConnected) {
+                    lastDirection = Direction.DOWN;
+                    return lastDirection;
+                }
+        }
+
+        return null;
+    }
+
+    private static boolean insertAndExtract(World world, BlockPos pos, BlockState state, XtremeMultiHopperBlockEntity blockEntity, BooleanSupplier booleanSupplier) {
         if (world.isClient) {
             return false;
         }
 
-        if (!blockEntity.needsCooldown() && state.get(XtremeHopperBlock.ENABLED)) {
+        if (!blockEntity.needsCooldown() && state.get(XtremeMultiHopperBlock.ENABLED)) {
             boolean bl = false;
 
             if (!blockEntity.isEmpty()) {
@@ -170,21 +243,26 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
         return false;
     }
 
-    private static boolean insert(World world, BlockPos pos, XtremeHopperBlockEntity blockEntity) {
-        Inventory inventory = getOutputInventory(world, pos, blockEntity);
-        if (inventory == null) {
-            return false;
-        }
-
-        Direction direction = blockEntity.facing.getOpposite();
-        if (isInventoryFull(inventory, direction)) {
-            return false;
-        }
-
+    private static boolean insert(World world, BlockPos pos, XtremeMultiHopperBlockEntity blockEntity) {
         for (int i = 0; i < blockEntity.size(); ++i) {
             ItemStack itemStack = blockEntity.getStack(i);
 
             if (!itemStack.isEmpty()) {
+                Direction nextFacing = blockEntity.getNextDirection();
+                if (nextFacing == null) {
+                    return false;
+                }
+
+                Inventory inventory = getOutputInventory(world, pos, nextFacing);
+                if (inventory == null) {
+                    continue;
+                }
+
+                Direction direction = nextFacing.getOpposite();
+                if (isInventoryFull(inventory, direction)) {
+                    continue;
+                }
+
                 int j = itemStack.getCount();
                 ItemStack itemStack2 = transfer(blockEntity, inventory, blockEntity.removeStack(i, 1), direction);
 
@@ -396,11 +474,11 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
             }
 
             if (bl) {
-                if (bl2 && to instanceof XtremeHopperBlockEntity hopperBlockEntity) {
+                if (bl2 && to instanceof XtremeMultiHopperBlockEntity hopperBlockEntity) {
                     if (!hopperBlockEntity.isDisabled()) {
                         int j = 0;
 
-                        if (from instanceof XtremeHopperBlockEntity hopperBlockEntity2) {
+                        if (from instanceof XtremeMultiHopperBlockEntity hopperBlockEntity2) {
                             if (hopperBlockEntity.lastTickTime >= hopperBlockEntity2.lastTickTime) {
                                 j = 1;
                             }
@@ -418,8 +496,8 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     @Nullable
-    private static Inventory getOutputInventory(World world, BlockPos pos, XtremeHopperBlockEntity blockEntity) {
-        return getInventoryAt(world, pos.offset(blockEntity.facing));
+    private static Inventory getOutputInventory(World world, BlockPos pos, Direction facing) {
+        return getInventoryAt(world, pos.offset(facing));
     }
 
     @Nullable
@@ -514,7 +592,7 @@ public class XtremeHopperBlockEntity extends LootableContainerBlockEntity implem
         this.inventory = inventory;
     }
 
-    public static void onEntityCollided(World world, BlockPos pos, BlockState state, Entity entity, XtremeHopperBlockEntity blockEntity) {
+    public static void onEntityCollided(World world, BlockPos pos, BlockState state, Entity entity, XtremeMultiHopperBlockEntity blockEntity) {
         if (entity instanceof ItemEntity itemEntity) {
             if (!itemEntity.getStack().isEmpty() && entity.getBoundingBox().offset(-pos.getX(), -pos.getY(), -pos.getZ()).intersects(blockEntity.getInputAreaShape())) {
                 insertAndExtract(world, pos, state, blockEntity, () -> extract(blockEntity, itemEntity));
