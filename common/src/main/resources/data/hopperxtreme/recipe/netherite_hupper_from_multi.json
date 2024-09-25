@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "hopperxtreme:netherite_multi_hupper"
+        }
+    ],
+    "result": {
+        "count": 4,
+        "id": "hopperxtreme:netherite_hupper"
+    }
+}

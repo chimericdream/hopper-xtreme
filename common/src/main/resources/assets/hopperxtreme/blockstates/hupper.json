@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "facing=up": {
+            "model": "hopperxtreme:block/hupper"
+        },
+        "facing=east": {
+            "model": "hopperxtreme:block/hupper_side",
+            "y": 90
+        },
+        "facing=north": {
+            "model": "hopperxtreme:block/hupper_side"
+        },
+        "facing=south": {
+            "model": "hopperxtreme:block/hupper_side",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "hopperxtreme:block/hupper_side",
+            "y": 270
+        }
+    }
+}

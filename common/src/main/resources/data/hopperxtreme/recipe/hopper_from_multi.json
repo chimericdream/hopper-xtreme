@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "hopperxtreme:multi_hopper"
+        }
+    ],
+    "result": {
+        "count": 4,
+        "id": "minecraft:hopper"
+    }
+}

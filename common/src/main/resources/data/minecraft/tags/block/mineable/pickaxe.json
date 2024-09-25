@@ -1,10 +1,30 @@
 {
     "replace": false,
     "values": [
-        "hopperxtreme:honeyed_hopper",
         "hopperxtreme:copper_hopper",
-        "hopperxtreme:golden_hopper",
+        "hopperxtreme:copper_hupper",
+
         "hopperxtreme:diamond_hopper",
-        "hopperxtreme:netherite_hopper"
+        "hopperxtreme:diamond_hupper",
+        "hopperxtreme:diamond_multi_hopper",
+        "hopperxtreme:diamond_multi_hupper",
+
+        "hopperxtreme:golden_hopper",
+        "hopperxtreme:golden_hupper",
+        "hopperxtreme:golden_multi_hopper",
+        "hopperxtreme:golden_multi_hupper",
+
+        "hopperxtreme:honeyed_hopper",
+        "hopperxtreme:honeyed_hupper",
+
+        "hopperxtreme:hupper",
+
+        "hopperxtreme:multi_hopper",
+        "hopperxtreme:multi_hupper",
+
+        "hopperxtreme:netherite_hopper",
+        "hopperxtreme:netherite_hupper",
+        "hopperxtreme:netherite_multi_hopper",
+        "hopperxtreme:netherite_multi_hupper"
     ]
 }

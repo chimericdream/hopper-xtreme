@@ -1,0 +1,27 @@
+{
+    "multipart": [
+        {
+            "apply": {"model": "hopperxtreme:block/multi_hupper/core"}
+        },
+        {
+            "apply": {"model": "hopperxtreme:block/multi_hupper/north"},
+            "when": {"north_connected": "true"}
+        },
+        {
+            "apply": {"model": "hopperxtreme:block/multi_hupper/south"},
+            "when": {"south_connected": "true"}
+        },
+        {
+            "apply": {"model": "hopperxtreme:block/multi_hupper/east"},
+            "when": {"east_connected": "true"}
+        },
+        {
+            "apply": {"model": "hopperxtreme:block/multi_hupper/west"},
+            "when": {"west_connected": "true"}
+        },
+        {
+            "apply": {"model": "hopperxtreme:block/multi_hupper/up"},
+            "when": {"up_connected": "true"}
+        }
+    ]
+}

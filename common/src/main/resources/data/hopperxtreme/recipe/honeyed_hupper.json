@@ -1,0 +1,11 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "hopperxtreme:honeyed_hopper"
+        }
+    ],
+    "result": {
+        "id": "hopperxtreme:honeyed_hupper"
+    }
+}

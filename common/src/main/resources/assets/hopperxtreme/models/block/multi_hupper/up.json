@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"inside": "minecraft:block/hopper_inside",
+		"outside": "minecraft:block/hopper_outside",
+		"particle": "minecraft:block/hopper_inside"
+	},
+	"elements": [
+		{
+			"from": [6, 12, 6],
+			"to": [10, 16, 10],
+			"faces": {
+				"north": {"uv": [6, 12, 10, 16], "texture": "#outside"},
+				"east": {"uv": [6, 12, 10, 16], "texture": "#outside"},
+				"south": {"uv": [6, 12, 10, 16], "texture": "#outside"},
+				"west": {"uv": [6, 12, 10, 16], "texture": "#outside"},
+				"up": {"uv": [6, 6, 10, 10], "texture": "#inside", "cullface": "up"}
+			}
+		}
+	]
+}
