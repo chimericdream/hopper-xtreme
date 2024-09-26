@@ -21,7 +21,7 @@ public class WrenchItem extends Item {
     public static final Identifier ITEM_ID = Identifier.of(ModInfo.MOD_ID, "tools/wrench");
 
     public WrenchItem() {
-        super(new Settings().maxCount(1).arch$tab(ItemGroups.TOOLS).arch$tab(ItemGroups.REDSTONE));
+        super(new Settings().maxCount(1).arch$tab(ItemGroups.TOOLS));
     }
 
     private boolean tryPlacing(BlockPos pos, BlockState state, World world) {
