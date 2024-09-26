@@ -38,6 +38,8 @@ import static com.chimericdream.hopperxtreme.block.Hoppers.XTREME_HUPPER_BLOCK_E
 
 
 public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implements Hopper {
+    private final Box INPUT_AREA_SHAPE = (Box)Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0).getBoundingBoxes().get(0);
+
     private final int cooldownInTicks;
 
     private static final int[][] AVAILABLE_SLOTS_CACHE = new int[54][];
@@ -76,6 +78,11 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
         }
 
         nbt.putInt("TransferCooldown", this.transferCooldown);
+    }
+
+    @Override
+    public Box getInputAreaShape() {
+        return INPUT_AREA_SHAPE;
     }
 
     public int size() {
@@ -429,7 +436,7 @@ public class XtremeHupperBlockEntity extends LootableContainerBlockEntity implem
     }
 
     public static List<ItemEntity> getInputItemEntities(World world, Hopper hopper) {
-        Box box = hopper.getInputAreaShape().offset(hopper.getHopperX() - 0.5, hopper.getHopperY() + 0.5, hopper.getHopperZ() - 0.5);
+        Box box = hopper.getInputAreaShape().offset(hopper.getHopperX() - 0.5, hopper.getHopperY(), hopper.getHopperZ() - 0.5);
         return world.getEntitiesByClass(ItemEntity.class, box, EntityPredicates.VALID_ENTITY);
     }
 
