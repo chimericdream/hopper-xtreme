@@ -29,6 +29,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.function.BooleanBiFunction;
@@ -247,7 +248,8 @@ public class XtremeMultiHopperBlock extends BlockWithEntity {
 
     @Override
     protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!stack.isIn(CommonTags.WRENCHES)) {
+        // Temporary workaround until the next version of Minekea adds its wrench to the common tag.
+        if (!stack.isIn(CommonTags.WRENCHES) && !stack.getItem().getRegistryEntry().registryKey().getValue().equals(Identifier.of("minekea:tools/wrench"))) {
             return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
