@@ -25,6 +25,7 @@
     "mixins": [
         "hopperxtreme.mixins.json"
     ],
+    "accessWidener": "hopperxtreme.accesswidener",
     "depends": {
         "fabricloader": ">=0.15.11",
         "minecraft": "~1.21",
